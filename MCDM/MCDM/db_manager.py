@@ -32,7 +32,7 @@ TEMP_DB_NAME = 'TEMP'
 
 
 def create_traditional_heuristic_results_table():
-    full_sql = ""
+    full_sql = "CREATE TABLE results.results_traditional_heuristic ( results_id INT NOT NULL AUTO_INCREMENT, total_number_of_criteria BIGINT NULL, total_solution_space BIGINT NULL, required_set BIGINT NULL, required_set_percentage FLOAT NULL, mcdm_technique BIGINT NULL, margine BIGINT NULL, margine_percentage FLOAT NULL, dataset_id BIGINT NULL, decision_id BIGINT NULL, preference_weight_1 FLOAT NULL, preference_weight_2 FLOAT NULL, preference_weight_3 FLOAT NULL, accuracy FLOAT NULL, PRIMARY KEY (results_id)); "
     try:
         db_connection = connector.connect(user=USER_NAME, password=PASSWORD, autocommit=True)
         cursor = db_connection.cursor()
@@ -117,6 +117,13 @@ def store_data(row_id, data, table_type):
     else:
         logging.debug("something wrong..")
 
+def insert_data_to_traditional_heuristic_results_table(total_number_of_criteria, total_solution_space, required_set, required_set_percentage, mcdm_technique, margine , margine_percentage , dataset_id , decision_id, preference_weight_1 , preference_weight_2 , accuracy):
+
+    sql = "INSERT INTO "+ RESULTS_DB_NAME + "." + RESULTS_TABLE_TRADITIONAL_HEURISTIC +" (total_number_of_criteria, total_solution_space, required_set, required_set_percentage, mcdm_technique, margine , margine_percentage, dataset_id , decision_id , preference_weight_1 , preference_weight_2 , accuracy ) VALUES ("+ str(total_number_of_criteria)+","+ str(total_solution_space)+","+ str(required_set)+","+ str(required_set_percentage)+","+ str(mcdm_technique)+","+ str(margine) +","+ str(margine_percentage)+","+ str(dataset_id) +","+ str(decision_id) +","+ str(preference_weight_1)+","+ str(preference_weight_2) +","+ str(accuracy)+");"
+    db_connection = connector.connect(user=USER_NAME, password=PASSWORD, autocommit=True)
+    cursor = db_connection.cursor()
+    cursor.execute(sql)
+    db_connection.commit()
 
 def insert_data_to_db(id, data, db_name, table_name):
     # logging.debug("insert_data_to_db")
