@@ -1,6 +1,6 @@
 
 from operator import itemgetter
-
+import numpy as np# learn more: https://python.org/pypi/numpy
 
 def required_set_generator(total_solution_space):
   if total_solution_space <= 10:
@@ -33,3 +33,15 @@ def heuristic_sql_creator(TO_REMOVE_LIST_ROUND):
 def order_removal_list(criteria_list):
     criteria_list =sorted(criteria_list, key=lambda student: student[1]) 
     return criteria_list
+
+
+
+def generate_all_combinations(total_number_of_criteria,TO_REMOVE):
+  n = total_number_of_criteria
+  total = TO_REMOVE
+  if n == 1:
+      yield (total,)
+  else:
+    for i in range(total + 1):
+      for j in generate_all_combinations(n - 1,total - i):
+        yield (i,) + j

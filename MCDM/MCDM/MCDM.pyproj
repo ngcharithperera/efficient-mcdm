@@ -30,6 +30,9 @@
     <Compile Include="main.py" />
     <Compile Include="db_manager.py" />
     <Compile Include="mcdm_techniques.py" />
+    <Compile Include="bruteforce_heuristic_mcdm.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="test.py" />
     <Compile Include="traditional_mcdm.py" />
     <Compile Include="util.py" />

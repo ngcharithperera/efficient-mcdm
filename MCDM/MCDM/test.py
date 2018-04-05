@@ -1,18 +1,15 @@
 import numpy as np# learn more: https://python.org/pypi/numpy
 
 
-def generate_all_combinations(n,total):
+def generate_all_combinations(total_number_of_criteria,TO_REMOVE):
+  n = total_number_of_criteria
+  total = TO_REMOVE
   if n == 1:
       yield (total,)
   else:
     for i in range(total + 1):
       for j in generate_all_combinations(n - 1,total - i):
         yield (i,) + j
-                
-                
-filtering_combinations = np.asarray(list(generate_all_combinations(3,20)))
-print(len(filtering_combinations))
-print(filtering_combinations)
 
 
 from operator import itemgetter

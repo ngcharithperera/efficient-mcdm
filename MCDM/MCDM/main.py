@@ -4,6 +4,8 @@ import decision_maker
 import util
 import traditional_mcdm
 import heuristic_mcdm
+import bruteforce_heuristic_mcdm
+import numpy as np
 
 #====Configuration Settings=====
 TOTAL_NUMBER_OF_CRITERIA = [2]
@@ -77,7 +79,12 @@ for total_number_of_criteria in TOTAL_NUMBER_OF_CRITERIA:
 
               db_manager.insert_data_to_traditional_heuristic_results_table(total_number_of_criteria, total_solution_space, required_set, required_set_percentage, mcdm_technique, margine , margine_percentage , dataset_id , decision_id, preference_weight_1 , preference_weight_2 , accuracy) 
 
-              #for combination in REMOVAL_COMBINATION:
+
+              filtering_combinations = np.asarray(list(util.generate_all_combinations(3,9)))
+              for combination in filtering_combinations:
+                  BRUTEFORCE_HEURISTIC_TOP_k = bruteforce_heuristic_mcdm.top_k_finder(required_set, mcdm_technique, DECISION_MAKER_PREFERENCE, combination,TO_REMOVE, total_number_of_criteria, total_solution_space)
+                  accuracy = bruteforce_heuristic_mcdm.accuracy(TRADITIONAL_TOP_k, BRUTEFORCE_HEURISTIC_TOP_k)
+
                 #str1 = "".join(str(e) for e in combination)
                 #print("combination: " +str1)
                 

@@ -4,12 +4,11 @@ import numpy
 import mcdm_techniques
 import util
 
-
-def top_k_finder(required_set, mcdm_technique, DECISION_MAKER_PREFERENCE,TO_REMOVE, total_number_of_criteria, total_solution_space):
+def top_k_finder(required_set, mcdm_technique, DECISION_MAKER_PREFERENCE,combination,TO_REMOVE, total_number_of_criteria, total_solution_space):
     db_manager.create_heuristic_mcdm_table(2)
     
-    TO_REMOVE_LIST = [i * TO_REMOVE for i in DECISION_MAKER_PREFERENCE]
-    TO_REMOVE_LIST_ROUND =  [round(x) for x in TO_REMOVE_LIST]
+    #TO_REMOVE_LIST = [i * TO_REMOVE for i in DECISION_MAKER_PREFERENCE]
+    TO_REMOVE_LIST_ROUND =  combination
     #TO_REMOVE_LIST_ROUND = [total_solution_space - i for i in TO_REMOVE_LIST_ROUND]
 
     #sql_tuple = util.heuristic_sql_creator(TO_REMOVE_LIST_ROUND)
@@ -29,10 +28,10 @@ def top_k_finder(required_set, mcdm_technique, DECISION_MAKER_PREFERENCE,TO_REMO
         
             db_manager.insert_data_to_heuristic_table(solution_id, heuristic_mcdm_index)
 
-    HEURISTIC_TOP_k = db_manager.sort_select_heuristic_table(required_set)
+    BRUTEFORCE_HEURISTIC_TOP_k = db_manager.sort_select_heuristic_table(required_set)
 
 
-    return HEURISTIC_TOP_k
+    return BRUTEFORCE_HEURISTIC_TOP_k
 
 
 def accuracy(TRADITIONAL_TOP_k, HEURISTIC_TOP_k):
