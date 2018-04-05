@@ -15,7 +15,7 @@ PASSWORD = '123asdASD'
 #Table names
 SOLUTION_SPACE_DATA_TABLE = 'solutionspacedata'
 RESULTS_TABLE_FULL = 'results_full'
-RESULTS_TABLE_SUMMARY = 'results_summary'
+RESULTS_TABLE_TRADITIONAL_HEURISTIC = 'results_traditional_heuristic'
 VIRTUAL_SENSOR_DATA_TABLE = 'virtualsensordata'
 TRADITIONAL_MCDM_TABLE = 'Traditional_MCDM_TABLE'
 HEURISTIC_MCDM_TABLE = 'Heuristic_MCDM_TABLE'
@@ -31,7 +31,27 @@ RESULTS_DB_NAME = 'RESULTS'
 TEMP_DB_NAME = 'TEMP'
 
 
+def create_traditional_heuristic_results_table():
+    full_sql = ""
+    try:
+        db_connection = connector.connect(user=USER_NAME, password=PASSWORD, autocommit=True)
+        cursor = db_connection.cursor()
+        cursor.execute("DROP TABLE IF EXISTS " + RESULTS_DB_NAME+"."+RESULTS_TABLE_TRADITIONAL_HEURISTIC + ";")
+        cursor.execute(full_sql)
+        logging.debug(full_sql)
+    except connector.Error as err:
+        print(err)
 
+
+#====Create the Results Database=====
+def create_results_database():
+    try:
+        db_connection = connector.connect(user=USER_NAME, password=PASSWORD, autocommit=True)
+        cursor = db_connection.cursor()
+        cursor.execute(
+            "CREATE DATABASE IF NOT EXISTS {} DEFAULT CHARACTER SET 'utf8'".format(RESULTS_DB_NAME))
+    except connector.Error as err:
+        print("Failed creating database: {}".format(err))
 
 #====Create the Database=====
 def create_database():

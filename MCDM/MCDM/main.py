@@ -15,6 +15,9 @@ REMOVAL_COMBINATION = [[1,7],[3,6],[5,5]]
 
 
 db_manager.create_database()
+db_manager.create_results_database()
+
+db_manager.create_traditional_heuristic_results_table()
 
 #====Experiment Design=====
 for total_number_of_criteria in TOTAL_NUMBER_OF_CRITERIA:
@@ -26,20 +29,25 @@ for total_number_of_criteria in TOTAL_NUMBER_OF_CRITERIA:
     for required_set in util.required_set_generator(total_solution_space):
       #print("required_set: " + str(required_set))
       
+      required_set_percentage = required_set / total_solution_space
+
       for mcdm_technique in MCDM_TECHNIQUE:
         #print("mcdm_technique: " + str(mcdm_technique))
         
         for margine in util.margin_generator(total_solution_space, required_set):
           #print("margine: " + str(margine))
           
+          margine_percentage = margine / required_set
+
           TO_REMOVE = util.removal_tracker(total_solution_space, required_set, margine)
           
-          for seed in  range(1, SEED):
+          for dataset_id in  range(1, SEED):
             #print("seed: " + str(seed))              
             
             db_manager.create_dataset_table(total_number_of_criteria)
             db_manager.create_dataset(total_number_of_criteria,total_solution_space)
             
+
             for decision_id in range(1, TOTAL_DECISION_MAKER_PREFERENCES):
               #print("decision_id: " + str(decision_id))
               DECISION_MAKER_PREFERENCE = decision_maker.generate_prefernce(total_number_of_criteria)
@@ -64,6 +72,9 @@ for total_number_of_criteria in TOTAL_NUMBER_OF_CRITERIA:
               print("HEURISTIC_TOP_k" + str(HEURISTIC_TOP_k))
               print(accuracy)
               print("=======")
+
+
+
               #for combination in REMOVAL_COMBINATION:
                 #str1 = "".join(str(e) for e in combination)
                 #print("combination: " +str1)
