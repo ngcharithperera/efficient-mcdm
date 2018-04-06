@@ -25,7 +25,6 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="decision_maker.py" />
     <Compile Include="heuristic_mcdm.py" />
     <Compile Include="main.py" />
     <Compile Include="db_manager.py" />
@@ -33,7 +32,6 @@
     <Compile Include="bruteforce_heuristic_mcdm.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="test.py" />
     <Compile Include="traditional_mcdm.py" />
     <Compile Include="util.py" />
   </ItemGroup>

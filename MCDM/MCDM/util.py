@@ -1,19 +1,28 @@
 
 from operator import itemgetter
-import numpy as np# learn more: https://python.org/pypi/numpy
+import numpy as np
 import pandas as pd
+import random
+
+
+def generate_prefernce(total_number_of_criteria):
+  list = []  
+  for i in range(0,total_number_of_criteria):
+    x = random.randint(1,10)
+    list.append(x)
+    normalized_list = [float(i)/sum(list) for i in list]
+  return normalized_list
+
 
 def required_set_generator(total_solution_space):
   if total_solution_space <= 10:
     REQUIRED_SET = list(range(1, total_solution_space))
-    #print(REQUIRED_SET)
   return REQUIRED_SET
   
   
 def margin_generator(total_solution_space, required_set):
   if total_solution_space <= 10:
     MARGINE = list(range(0, (total_solution_space - required_set) + 1))
-    #print(MARGINE)
   return MARGINE
   
   
@@ -31,10 +40,10 @@ def heuristic_sql_creator(TO_REMOVE_LIST_ROUND):
         sql_tuple.append(x)
     return sql_tuple
 
+
 def order_removal_list(criteria_list):
     criteria_list =sorted(criteria_list, key=lambda student: student[1]) 
     return criteria_list
-
 
 
 def generate_all_combinations(total_number_of_criteria,TO_REMOVE):
@@ -51,8 +60,6 @@ def generate_all_combinations(total_number_of_criteria,TO_REMOVE):
 def create_table_description_sql(total_number_of_criteria, table_description):
     table_description_sql = ""
     CP1_mean= CP1_std= CP1_min= CP1_25= CP1_50= CP1_75= CP1_max= CP2_mean= CP2_std= CP2_min= CP2_25= CP2_50= CP2_75= CP2_max= CP3_mean= CP3_std= CP3_min= CP3_25= CP3_50= CP3_75= CP3_max ="NULL"
-
-
     CP1_mean = table_description.loc["CP1", "mean"]
     CP1_std = table_description.loc["CP1", "std"]
     CP1_min = table_description.loc["CP1", "min"]
