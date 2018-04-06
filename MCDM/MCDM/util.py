@@ -1,6 +1,7 @@
 
 from operator import itemgetter
 import numpy as np# learn more: https://python.org/pypi/numpy
+import pandas as pd
 
 def required_set_generator(total_solution_space):
   if total_solution_space <= 10:
@@ -45,3 +46,4 @@ def generate_all_combinations(total_number_of_criteria,TO_REMOVE):
     for i in range(total + 1):
       for j in generate_all_combinations(n - 1,total - i):
         yield (i,) + j
+

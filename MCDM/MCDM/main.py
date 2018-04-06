@@ -49,6 +49,8 @@ for total_number_of_criteria in TOTAL_NUMBER_OF_CRITERIA:
             
             db_manager.create_dataset_table(total_number_of_criteria)
             db_manager.create_dataset(total_number_of_criteria,total_solution_space)
+
+            table_description = db_manager.describe_table()
             
 
             for decision_id in range(1, TOTAL_DECISION_MAKER_PREFERENCES):

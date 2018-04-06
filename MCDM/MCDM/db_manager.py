@@ -275,6 +275,11 @@ def insert_data_to_heuristic_table(id, heuristic_mcdm_index):
     except connector.Error as err:
         print(err)
 
+def describe_table():
+    db_connection = connector.connect(user=USER_NAME, password=PASSWORD, autocommit=True)
+    df = pd.read_sql('SELECT * FROM' + DB_NAME +"."+ SOLUTION_SPACE_DATA_TABLE, con=db_connection)
+    table_description = np.round(df.describe(), 2).T
+    return table_description
 
 
 def sort_select_heuristic_table(required_set):

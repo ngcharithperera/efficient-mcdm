@@ -14,7 +14,7 @@ def top_k_finder(required_set, mcdm_technique, DECISION_MAKER_PREFERENCE,combina
     #sql_tuple = util.heuristic_sql_creator(TO_REMOVE_LIST_ROUND)
 
     HEURISTIC_TOP_k = []
-    CPHF_sql = db_manager.prepare_CPHF_sql(TO_REMOVE_LIST_ROUND, total_number_of_criteria,total_solution_space)
+    CPHF_sql = db_manager.prepare_bruteforce_sql(TO_REMOVE_LIST_ROUND, total_number_of_criteria,total_solution_space)
     results = db_manager.read_dataset_for_heuristic_mcdm(CPHF_sql)
     for records in results:
         rows = records.fetchall()
