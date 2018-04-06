@@ -9,7 +9,7 @@ def top_k_finder(required_set, mcdm_technique, DECISION_MAKER_PREFERENCE,TO_REMO
     db_manager.create_heuristic_mcdm_table(2)
     
     TO_REMOVE_LIST = [i * TO_REMOVE for i in DECISION_MAKER_PREFERENCE]
-    TO_REMOVE_LIST_ROUND =  [round(x) for x in TO_REMOVE_LIST]
+    TO_REMOVE_LIST_ROUND =  [int(round(x)) for x in TO_REMOVE_LIST]
     #TO_REMOVE_LIST_ROUND = [total_solution_space - i for i in TO_REMOVE_LIST_ROUND]
 
     #sql_tuple = util.heuristic_sql_creator(TO_REMOVE_LIST_ROUND)

@@ -132,9 +132,18 @@ def store_data(row_id, data, table_type):
     else:
         logging.debug("something wrong..")
 
-def insert_data_to_traditional_heuristic_results_table(total_number_of_criteria, total_solution_space, required_set, required_set_percentage, mcdm_technique, margine , margine_percentage , dataset_id , decision_id, preference_weight_1 , preference_weight_2 , accuracy):
 
-    sql = "INSERT INTO "+ RESULTS_DB_NAME + "." + RESULTS_TABLE_TRADITIONAL_HEURISTIC +" (total_number_of_criteria, total_solution_space, required_set, required_set_percentage, mcdm_technique, margine , margine_percentage, dataset_id , decision_id , preference_weight_1 , preference_weight_2 , accuracy ) VALUES ("+ str(total_number_of_criteria)+","+ str(total_solution_space)+","+ str(required_set)+","+ str(required_set_percentage)+","+ str(mcdm_technique)+","+ str(margine) +","+ str(margine_percentage)+","+ str(dataset_id) +","+ str(decision_id) +","+ str(preference_weight_1)+","+ str(preference_weight_2) +","+ str(accuracy)+");"
+def insert_data_to_bruteforce_heuristic_results_table(total_number_of_criteria, total_solution_space, required_set, required_set_percentage, mcdm_technique, margine , margine_percentage , dataset_id , decision_id, preference_weight_1 , preference_weight_2 , accuracy, ):
+
+    sql = "INSERT INTO "+ RESULTS_DB_NAME + "." + RESULTS_TABLE_TRADITIONAL_HEURISTIC +" (total_number_of_criteria, total_solution_space, required_set, required_set_percentage, mcdm_technique, margine , margine_percentage, dataset_id , decision_id , preference_weight_1 , preference_weight_2 , preference_weight_3 , accuracy ) VALUES ("+ str(total_number_of_criteria)+","+ str(total_solution_space)+","+ str(required_set)+","+ str(required_set_percentage)+","+ str(mcdm_technique)+","+ str(margine) +","+ str(margine_percentage)+","+ str(dataset_id) +","+ str(decision_id) +","+ str(preference_weight_1)+","+ str(preference_weight_2) +","+ (preference_weight_3) +","+ str(accuracy)+");"
+    db_connection = connector.connect(user=USER_NAME, password=PASSWORD, autocommit=True)
+    cursor = db_connection.cursor()
+    cursor.execute(sql)
+    db_connection.commit()
+
+def insert_data_to_traditional_heuristic_results_table(total_number_of_criteria, total_solution_space, required_set, required_set_percentage, mcdm_technique, margine , margine_percentage , dataset_id , decision_id, preference_weight_1 , preference_weight_2, preference_weight_3, accuracy):
+
+    sql = "INSERT INTO "+ RESULTS_DB_NAME + "." + RESULTS_TABLE_TRADITIONAL_HEURISTIC +" (total_number_of_criteria, total_solution_space, required_set, required_set_percentage, mcdm_technique, margine , margine_percentage, dataset_id , decision_id , preference_weight_1 , preference_weight_2, preference_weight_3 , accuracy ) VALUES ("+ str(total_number_of_criteria)+","+ str(total_solution_space)+","+ str(required_set)+","+ str(required_set_percentage)+","+ str(mcdm_technique)+","+ str(margine) +","+ str(margine_percentage)+","+ str(dataset_id) +","+ str(decision_id) +","+ str(preference_weight_1)+","+ str(preference_weight_2) +","+  (preference_weight_3) +","+ str(accuracy)+");"
     db_connection = connector.connect(user=USER_NAME, password=PASSWORD, autocommit=True)
     cursor = db_connection.cursor()
     cursor.execute(sql)

@@ -52,6 +52,9 @@ for total_number_of_criteria in TOTAL_NUMBER_OF_CRITERIA:
 
             table_description = db_manager.describe_table()
             
+            table_description_sql = util.create_table_description_sql(total_number_of_criteria, table_description)
+
+
 
             for decision_id in range(1, TOTAL_DECISION_MAKER_PREFERENCES):
               #print("decision_id: " + str(decision_id))
@@ -80,13 +83,18 @@ for total_number_of_criteria in TOTAL_NUMBER_OF_CRITERIA:
               print(accuracy)
               print("=======")
 
-              db_manager.insert_data_to_traditional_heuristic_results_table(total_number_of_criteria, total_solution_space, required_set, required_set_percentage, mcdm_technique, margine , margine_percentage , dataset_id , decision_id, preference_weight_1 , preference_weight_2 , accuracy) 
+              if total_number_of_criteria < 3:
+                preference_weight_3 = "NULL"
+
+              db_manager.insert_data_to_traditional_heuristic_results_table(total_number_of_criteria, total_solution_space, required_set, required_set_percentage, mcdm_technique, margine , margine_percentage , dataset_id , decision_id, preference_weight_1 , preference_weight_2, preference_weight_3 , accuracy) 
 
 
               filtering_combinations = np.asarray(list(util.generate_all_combinations(3,9)))
               for combination in filtering_combinations:
                   BRUTEFORCE_HEURISTIC_TOP_k = bruteforce_heuristic_mcdm.top_k_finder(required_set, mcdm_technique, DECISION_MAKER_PREFERENCE, combination,TO_REMOVE, total_number_of_criteria, total_solution_space)
                   accuracy_bruteforce = bruteforce_heuristic_mcdm.accuracy(TRADITIONAL_TOP_k, BRUTEFORCE_HEURISTIC_TOP_k)
+
+                  db_manager.insert_data_to_bruteforce_heuristic_results_table(total_number_of_criteria, total_solution_space, required_set, required_set_percentage, mcdm_technique, margine , margine_percentage , dataset_id , decision_id, preference_weight_1 , preference_weight_2 , preference_weight_3, accuracy, table_description_sql) 
 
                 #str1 = "".join(str(e) for e in combination)
                 #print("combination: " +str1)
