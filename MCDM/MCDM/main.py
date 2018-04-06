@@ -13,8 +13,8 @@ import numpy as np
 TOTAL_NUMBER_OF_CRITERIA = [2, 3]
 TOTAL_SOLUTION_SPACE = [10, 100]
 MCDM_TECHNIQUE = [1]
-NUMBER_OF_DATASETS = 1000
-TOTAL_DECISION_MAKER_PREFERENCES = 1000
+NUMBER_OF_DATASETS = 10
+TOTAL_DECISION_MAKER_PREFERENCES = 10
 #REMOVAL_COMBINATION = [[1,7],[3,6],[5,5]]
 
 
@@ -76,7 +76,9 @@ for total_number_of_criteria in TOTAL_NUMBER_OF_CRITERIA:
                     CP3_removal = combination[2]
                   BRUTEFORCE_HEURISTIC_TOP_k = bruteforce_heuristic_mcdm.top_k_finder(required_set, mcdm_technique, DECISION_MAKER_PREFERENCE, combination,TO_REMOVE, total_number_of_criteria, total_solution_space)
                   accuracy_bruteforce = bruteforce_heuristic_mcdm.accuracy(TRADITIONAL_TOP_k, BRUTEFORCE_HEURISTIC_TOP_k)
-                  db_manager.insert_data_to_bruteforce_heuristic_results_table(total_number_of_criteria, total_solution_space, required_set, required_set_percentage, mcdm_technique, margine , margine_percentage , dataset_id , decision_id, preference_weight_1 , preference_weight_2 , preference_weight_3, accuracy, accuracy_bruteforce, CP1_removal, CP2_removal, CP3_removal, table_description_sql) 
+                  all_top_k = "TRADITIONAL: " + str(TRADITIONAL_TOP_k) + " : " + "HEURISTIC: " + str(HEURISTIC_TOP_k) + " : " + "BRUTEFORCE_HEURISTIC: " + str(BRUTEFORCE_HEURISTIC_TOP_k)
+                  
+                  db_manager.insert_data_to_bruteforce_heuristic_results_table(total_number_of_criteria, total_solution_space, required_set, required_set_percentage, mcdm_technique, margine , margine_percentage , dataset_id , decision_id, preference_weight_1 , preference_weight_2 , preference_weight_3, accuracy, accuracy_bruteforce, CP1_removal, CP2_removal, CP3_removal, all_top_k, table_description_sql ) 
      
               
             
