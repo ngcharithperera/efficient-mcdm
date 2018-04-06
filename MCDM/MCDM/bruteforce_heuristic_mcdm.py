@@ -5,16 +5,16 @@ import mcdm_techniques
 import util
 
 def top_k_finder(required_set, mcdm_technique, DECISION_MAKER_PREFERENCE,combination,TO_REMOVE, total_number_of_criteria, total_solution_space):
-    db_manager.create_heuristic_mcdm_table(2)
+    db_manager.create_heuristic_mcdm_table(required_set)
     
     #TO_REMOVE_LIST = [i * TO_REMOVE for i in DECISION_MAKER_PREFERENCE]
-    TO_REMOVE_LIST_ROUND =  combination
+    TO_REMOVE_LIST_ROUND =  combination.tolist()
     #TO_REMOVE_LIST_ROUND = [total_solution_space - i for i in TO_REMOVE_LIST_ROUND]
 
     #sql_tuple = util.heuristic_sql_creator(TO_REMOVE_LIST_ROUND)
 
     HEURISTIC_TOP_k = []
-    CPHF_sql = db_manager.prepare_bruteforce_sql(TO_REMOVE_LIST_ROUND, total_number_of_criteria,total_solution_space)
+    CPHF_sql = db_manager.prepare_CPHF_sql(TO_REMOVE_LIST_ROUND, total_number_of_criteria,total_solution_space)
     results = db_manager.read_dataset_for_heuristic_mcdm(CPHF_sql)
     for records in results:
         rows = records.fetchall()

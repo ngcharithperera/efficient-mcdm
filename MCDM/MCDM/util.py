@@ -50,6 +50,9 @@ def generate_all_combinations(total_number_of_criteria,TO_REMOVE):
 
 def create_table_description_sql(total_number_of_criteria, table_description):
     table_description_sql = ""
+    CP1_mean= CP1_std= CP1_min= CP1_25= CP1_50= CP1_75= CP1_max= CP2_mean= CP2_std= CP2_min= CP2_25= CP2_50= CP2_75= CP2_max= CP3_mean= CP3_std= CP3_min= CP3_25= CP3_50= CP3_75= CP3_max ="NULL"
+
+
     CP1_mean = table_description.loc["CP1", "mean"]
     CP1_std = table_description.loc["CP1", "std"]
     CP1_min = table_description.loc["CP1", "min"]
@@ -65,6 +68,7 @@ def create_table_description_sql(total_number_of_criteria, table_description):
     CP2_50 = table_description.loc["CP2", "50%"]
     CP2_75 = table_description.loc["CP2", "75%"]
     CP2_max = table_description.loc["CP2", "max"]
+    
     if total_number_of_criteria > 2:
         CP3_mean = table_description.loc["CP3", "mean"]
         CP3_std = table_description.loc["CP3", "std"]
@@ -73,4 +77,6 @@ def create_table_description_sql(total_number_of_criteria, table_description):
         CP3_50 = table_description.loc["CP3", "50%"]
         CP3_75 = table_description.loc["CP3", "75%"]
         CP3_max = table_description.loc["CP3", "max"]
+
+    table_description_sql = str(CP1_mean) +","+ str(CP1_std)+","+ str(CP1_min)+","+ str(CP1_25)+","+ str(CP1_50)+","+ str(CP1_75)+","+ str(CP1_max)+","+ str(CP2_mean)+","+ str(CP2_std)+","+ str(CP2_min)+","+ str(CP2_25)+","+ str(CP2_50)+","+ str(CP2_75)+","+ str(CP2_max)+","+ str(CP3_mean)+","+ str(CP3_std)+","+ str(CP3_min)+","+ str(CP3_25)+","+ str(CP3_50)+","+ str(CP3_75)+","+ str(CP3_max)
     return table_description_sql

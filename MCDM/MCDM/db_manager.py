@@ -36,11 +36,11 @@ TEMP_DB_NAME = 'TEMP'
 
 
 def create_bruteforce_heuristic_results_table():
-    full_sql = "CREATE TABLE results.results_traditional_heuristic ( results_id INT NOT NULL AUTO_INCREMENT, total_number_of_criteria BIGINT NULL, total_solution_space BIGINT NULL, required_set BIGINT NULL, required_set_percentage FLOAT NULL, mcdm_technique BIGINT NULL, margine BIGINT NULL, margine_percentage FLOAT NULL, dataset_id BIGINT NULL, decision_id BIGINT NULL, preference_weight_1 FLOAT NULL, preference_weight_2 FLOAT NULL, preference_weight_3 FLOAT NULL, accuracy FLOAT NULL, PRIMARY KEY (results_id)); "
+    full_sql = "CREATE TABLE results.results_bruteforce_heuristic ( results_id INT NOT NULL AUTO_INCREMENT, total_number_of_criteria BIGINT NULL, total_solution_space BIGINT NULL, required_set BIGINT NULL, required_set_percentage FLOAT NULL, mcdm_technique BIGINT NULL, margine BIGINT NULL, margine_percentage FLOAT NULL, dataset_id BIGINT NULL, decision_id BIGINT NULL, preference_weight_1 FLOAT NULL, preference_weight_2 FLOAT NULL, preference_weight_3 FLOAT NULL, accuracy FLOAT NULL, CP1_removal BIGINT NULL, CP2_removal BIGINT NULL, CP3_removal BIGINT NULL, CP1_mean FLOAT NULL, CP1_std FLOAT NULL,CP1_min FLOAT NULL,CP1_25 FLOAT NULL,CP1_50 FLOAT NULL,CP1_75 FLOAT NULL,CP1_max FLOAT NULL,CP2_mean FLOAT NULL,CP2_std FLOAT NULL,CP2_min FLOAT NULL,CP2_25 FLOAT NULL,CP2_50 FLOAT NULL,CP2_75 FLOAT NULL ,CP2_max FLOAT NULL,CP3_mean FLOAT NULL,CP3_std FLOAT NULL,CP3_min FLOAT NULL,CP3_25 FLOAT NULL,CP3_50 FLOAT NULL,CP3_75 FLOAT NULL,CP3_max FLOAT NULL, PRIMARY KEY (results_id)); "
     try:
         db_connection = connector.connect(user=USER_NAME, password=PASSWORD, autocommit=True)
         cursor = db_connection.cursor()
-        cursor.execute("DROP TABLE IF EXISTS " + BRUTEFORCE_RESULTS_DB_NAME+"."+RESULTS_TABLE_BRUTEFORCE_HEURISTIC + ";")
+        cursor.execute("DROP TABLE IF EXISTS " + RESULTS_DB_NAME+"."+RESULTS_TABLE_BRUTEFORCE_HEURISTIC + ";")
         cursor.execute(full_sql)
         logging.debug(full_sql)
     except connector.Error as err:
@@ -133,9 +133,9 @@ def store_data(row_id, data, table_type):
         logging.debug("something wrong..")
 
 
-def insert_data_to_bruteforce_heuristic_results_table(total_number_of_criteria, total_solution_space, required_set, required_set_percentage, mcdm_technique, margine , margine_percentage , dataset_id , decision_id, preference_weight_1 , preference_weight_2 , accuracy, ):
+def insert_data_to_bruteforce_heuristic_results_table(total_number_of_criteria, total_solution_space, required_set, required_set_percentage, mcdm_technique, margine , margine_percentage , dataset_id , decision_id, preference_weight_1 , preference_weight_2 , preference_weight_3, accuracy, CP1_removal, CP2_removal, CP3_removal, table_description_sql):
 
-    sql = "INSERT INTO "+ RESULTS_DB_NAME + "." + RESULTS_TABLE_TRADITIONAL_HEURISTIC +" (total_number_of_criteria, total_solution_space, required_set, required_set_percentage, mcdm_technique, margine , margine_percentage, dataset_id , decision_id , preference_weight_1 , preference_weight_2 , preference_weight_3 , accuracy ) VALUES ("+ str(total_number_of_criteria)+","+ str(total_solution_space)+","+ str(required_set)+","+ str(required_set_percentage)+","+ str(mcdm_technique)+","+ str(margine) +","+ str(margine_percentage)+","+ str(dataset_id) +","+ str(decision_id) +","+ str(preference_weight_1)+","+ str(preference_weight_2) +","+ (preference_weight_3) +","+ str(accuracy)+");"
+    sql = "INSERT INTO "+ RESULTS_DB_NAME + "." + RESULTS_TABLE_BRUTEFORCE_HEURISTIC +" (total_number_of_criteria, total_solution_space, required_set, required_set_percentage, mcdm_technique, margine , margine_percentage, dataset_id , decision_id , preference_weight_1 , preference_weight_2 , preference_weight_3 , accuracy, CP1_removal, CP2_removal, CP3_removal, CP1_mean , CP1_std , CP1_min , CP1_25 , CP1_50 , CP1_75 , CP1_max , CP2_mean , CP2_std , CP2_min , CP2_25 , CP2_50 , CP2_75  ,CP2_max , CP3_mean , CP3_std ,CP3_min ,CP3_25 ,CP3_50 ,CP3_75 ,CP3_max   ) VALUES ("+ str(total_number_of_criteria)+","+ str(total_solution_space)+","+ str(required_set)+","+ str(required_set_percentage)+","+ str(mcdm_technique)+","+ str(margine) +","+ str(margine_percentage)+","+ str(dataset_id) +","+ str(decision_id) +","+ str(preference_weight_1)+","+ str(preference_weight_2) +","+ (preference_weight_3) +","+ str(accuracy) +","+      str(CP1_removal) +","+ str(CP2_removal)+","+ str(CP3_removal) +","+ table_description_sql+");"
     db_connection = connector.connect(user=USER_NAME, password=PASSWORD, autocommit=True)
     cursor = db_connection.cursor()
     cursor.execute(sql)

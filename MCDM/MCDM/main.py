@@ -89,12 +89,17 @@ for total_number_of_criteria in TOTAL_NUMBER_OF_CRITERIA:
               db_manager.insert_data_to_traditional_heuristic_results_table(total_number_of_criteria, total_solution_space, required_set, required_set_percentage, mcdm_technique, margine , margine_percentage , dataset_id , decision_id, preference_weight_1 , preference_weight_2, preference_weight_3 , accuracy) 
 
 
-              filtering_combinations = np.asarray(list(util.generate_all_combinations(3,9)))
+              filtering_combinations = np.asarray(list(util.generate_all_combinations(total_number_of_criteria,TO_REMOVE)))
               for combination in filtering_combinations:
+                  CP1_removal = CP2_removal = CP3_removal = "NULL"
+                  CP1_removal = combination[0]
+                  CP2_removal = combination[1]
+                  if total_number_of_criteria > 2:
+                    CP3_removal = combination[2]
                   BRUTEFORCE_HEURISTIC_TOP_k = bruteforce_heuristic_mcdm.top_k_finder(required_set, mcdm_technique, DECISION_MAKER_PREFERENCE, combination,TO_REMOVE, total_number_of_criteria, total_solution_space)
                   accuracy_bruteforce = bruteforce_heuristic_mcdm.accuracy(TRADITIONAL_TOP_k, BRUTEFORCE_HEURISTIC_TOP_k)
 
-                  db_manager.insert_data_to_bruteforce_heuristic_results_table(total_number_of_criteria, total_solution_space, required_set, required_set_percentage, mcdm_technique, margine , margine_percentage , dataset_id , decision_id, preference_weight_1 , preference_weight_2 , preference_weight_3, accuracy, table_description_sql) 
+                  db_manager.insert_data_to_bruteforce_heuristic_results_table(total_number_of_criteria, total_solution_space, required_set, required_set_percentage, mcdm_technique, margine , margine_percentage , dataset_id , decision_id, preference_weight_1 , preference_weight_2 , preference_weight_3, accuracy, CP1_removal, CP2_removal, CP3_removal, table_description_sql) 
 
                 #str1 = "".join(str(e) for e in combination)
                 #print("combination: " +str1)
