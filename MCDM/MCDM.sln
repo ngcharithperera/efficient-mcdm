@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27428.2015
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "MCDM", "MCDM\MCDM.pyproj", "{276014BF-5409-4B7B-9E27-5ED70A77CB89}"
 EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "MCDM_VISUALIZATION", "MCDM_VISUALIZATION\MCDM_VISUALIZATION.pyproj", "{4F9C56D7-030B-4BC3-A61A-1C2D57D0A07B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,8 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{276014BF-5409-4B7B-9E27-5ED70A77CB89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{276014BF-5409-4B7B-9E27-5ED70A77CB89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F9C56D7-030B-4BC3-A61A-1C2D57D0A07B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F9C56D7-030B-4BC3-A61A-1C2D57D0A07B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -10,12 +10,12 @@ import numpy as np
 
 
 #====Configuration Settings=====
-TOTAL_NUMBER_OF_CRITERIA = [2]
-TOTAL_SOLUTION_SPACE = [10]
+TOTAL_NUMBER_OF_CRITERIA = [2, 3]
+TOTAL_SOLUTION_SPACE = [10, 100]
 MCDM_TECHNIQUE = [1]
-SEED = 2
-TOTAL_DECISION_MAKER_PREFERENCES = 5
-REMOVAL_COMBINATION = [[1,7],[3,6],[5,5]]
+NUMBER_OF_DATASETS = 1000
+TOTAL_DECISION_MAKER_PREFERENCES = 1000
+#REMOVAL_COMBINATION = [[1,7],[3,6],[5,5]]
 
 
 
@@ -32,19 +32,24 @@ db_manager.create_bruteforce_heuristic_results_table()
 
 #====Experiment Design=====
 for total_number_of_criteria in TOTAL_NUMBER_OF_CRITERIA:
+# Factor 1 (total_number_of_criteria)
  
   for total_solution_space in TOTAL_SOLUTION_SPACE:
-    
-    for required_set in util.required_set_generator(total_solution_space):              
+  # Factor 2 (total_solution_space)  
+
+    for required_set in util.required_set_generator(total_solution_space):       
       required_set_percentage = (required_set / total_solution_space)
+      # Factor 3 (required_set)
 
       for mcdm_technique in MCDM_TECHNIQUE:          
+      # Factor * (mcdm_technique)  
 
         for margine in util.margin_generator(total_solution_space, required_set):          
           margine_percentage = (margine / required_set) 
           TO_REMOVE = util.removal_tracker(total_solution_space, required_set, margine)
+          # Factor 4 (margine)
           
-          for dataset_id in  range(1, SEED):            
+          for dataset_id in  range(1, NUMBER_OF_DATASETS):            
             db_manager.create_dataset_table(total_number_of_criteria)
             db_manager.create_dataset(total_number_of_criteria,total_solution_space)
             table_description = db_manager.describe_table()            
@@ -71,7 +76,7 @@ for total_number_of_criteria in TOTAL_NUMBER_OF_CRITERIA:
                     CP3_removal = combination[2]
                   BRUTEFORCE_HEURISTIC_TOP_k = bruteforce_heuristic_mcdm.top_k_finder(required_set, mcdm_technique, DECISION_MAKER_PREFERENCE, combination,TO_REMOVE, total_number_of_criteria, total_solution_space)
                   accuracy_bruteforce = bruteforce_heuristic_mcdm.accuracy(TRADITIONAL_TOP_k, BRUTEFORCE_HEURISTIC_TOP_k)
-                  db_manager.insert_data_to_bruteforce_heuristic_results_table(total_number_of_criteria, total_solution_space, required_set, required_set_percentage, mcdm_technique, margine , margine_percentage , dataset_id , decision_id, preference_weight_1 , preference_weight_2 , preference_weight_3, accuracy, CP1_removal, CP2_removal, CP3_removal, table_description_sql) 
+                  db_manager.insert_data_to_bruteforce_heuristic_results_table(total_number_of_criteria, total_solution_space, required_set, required_set_percentage, mcdm_technique, margine , margine_percentage , dataset_id , decision_id, preference_weight_1 , preference_weight_2 , preference_weight_3, accuracy, accuracy_bruteforce, CP1_removal, CP2_removal, CP3_removal, table_description_sql) 
      
               
             
