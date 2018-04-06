@@ -12,7 +12,7 @@
     <Name>MCDM</Name>
     <RootNamespace>MCDM</RootNamespace>
     <IsWindowsApplication>True</IsWindowsApplication>
-    <InterpreterId>Global|PythonCore|3.4-32</InterpreterId>
+    <InterpreterId>Global|ContinuumAnalytics|Anaconda27-64</InterpreterId>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
@@ -38,7 +38,7 @@
     <Compile Include="util.py" />
   </ItemGroup>
   <ItemGroup>
-    <InterpreterReference Include="Global|PythonCore|3.4-32" />
+    <InterpreterReference Include="Global|ContinuumAnalytics|Anaconda27-64" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

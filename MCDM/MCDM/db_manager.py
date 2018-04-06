@@ -6,6 +6,7 @@ import util
 from mysql import connector
 from mysql.connector import cursor
 import numpy as np
+import pandas as pd
 #from scipy.lib.six import xrange
 
 #Setting Database Configuration Parameters
@@ -277,8 +278,10 @@ def insert_data_to_heuristic_table(id, heuristic_mcdm_index):
 
 def describe_table():
     db_connection = connector.connect(user=USER_NAME, password=PASSWORD, autocommit=True)
-    df = pd.read_sql('SELECT * FROM' + DB_NAME +"."+ SOLUTION_SPACE_DATA_TABLE, con=db_connection)
+    sql = 'SELECT * FROM ' + DB_NAME +"."+ SOLUTION_SPACE_DATA_TABLE
+    df = pd.read_sql(sql, con=db_connection)
     table_description = np.round(df.describe(), 2).T
+    print(table_description)
     return table_description
 
 
