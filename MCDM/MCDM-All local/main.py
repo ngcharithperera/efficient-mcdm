@@ -23,9 +23,9 @@ TOTAL_DECISION_MAKER_PREFERENCES = 10
 #====Database Creation======
 #====create two databases: (1) store Temp data (2) store results
 db_manager.create_database()
-#db_manager.create_results_database()
-#db_manager.create_traditional_heuristic_results_table()
-#db_manager.create_bruteforce_heuristic_results_table()
+db_manager.create_results_database()
+db_manager.create_traditional_heuristic_results_table()
+db_manager.create_bruteforce_heuristic_results_table()
 
 
 
