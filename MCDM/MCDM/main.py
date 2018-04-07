@@ -10,8 +10,8 @@ import numpy as np
 
 
 #====Configuration Settings=====
-TOTAL_NUMBER_OF_CRITERIA = [2, 3]
-TOTAL_SOLUTION_SPACE = [10, 100]
+TOTAL_NUMBER_OF_CRITERIA = [3]
+TOTAL_SOLUTION_SPACE = [10]
 MCDM_TECHNIQUE = [1]
 NUMBER_OF_DATASETS = 10
 TOTAL_DECISION_MAKER_PREFERENCES = 10
@@ -66,6 +66,9 @@ for total_number_of_criteria in TOTAL_NUMBER_OF_CRITERIA:
               accuracy = heuristic_mcdm.accuracy(TRADITIONAL_TOP_k, HEURISTIC_TOP_k)
               if total_number_of_criteria < 3:
                 preference_weight_3 = "NULL"
+              if total_number_of_criteria >= 3:
+                preference_weight_3 = DECISION_MAKER_PREFERENCE[2]
+                
               db_manager.insert_data_to_traditional_heuristic_results_table(total_number_of_criteria, total_solution_space, required_set, required_set_percentage, mcdm_technique, margine , margine_percentage , dataset_id , decision_id, preference_weight_1 , preference_weight_2, preference_weight_3 , accuracy) 
               filtering_combinations = np.asarray(list(util.generate_all_combinations(total_number_of_criteria,TO_REMOVE)))
               for combination in filtering_combinations:

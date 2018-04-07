@@ -15,7 +15,9 @@ def generate_prefernce(total_number_of_criteria):
 
 
 def required_set_generator(total_solution_space):
-  if total_solution_space <= 10:
+  if total_solution_space == 10:
+    REQUIRED_SET = list(range(1, total_solution_space))
+  if total_solution_space == 100:
     REQUIRED_SET = list(range(1, total_solution_space))
   return REQUIRED_SET
   

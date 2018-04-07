@@ -34,7 +34,7 @@ CREATE TABLE `results`.`results_bruteforce_heuristic` (
   `preference_weight_3` float DEFAULT NULL,
   `accuracy` float DEFAULT NULL,
   `accuracy_bruteforce` float DEFAULT NULL,
-  `all_top_k` varchar(100) DEFAULT NULL,
+  `all_top_k` varchar(1000) DEFAULT NULL,
   `CP1_removal` bigint(20) DEFAULT NULL,
   `CP2_removal` bigint(20) DEFAULT NULL,
   `CP3_removal` bigint(20) DEFAULT NULL,
