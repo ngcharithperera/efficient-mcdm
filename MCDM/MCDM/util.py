@@ -23,7 +23,9 @@ def required_set_generator(total_solution_space):
   
   
 def margin_generator(total_solution_space, required_set):
-  if total_solution_space <= 10:
+  if total_solution_space == 10:
+    MARGINE = list(range(0, (total_solution_space - required_set) + 1))
+  if total_solution_space == 100:
     MARGINE = list(range(0, (total_solution_space - required_set) + 1))
   return MARGINE
   
