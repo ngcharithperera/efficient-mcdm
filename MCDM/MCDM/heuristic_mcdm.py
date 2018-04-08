@@ -10,7 +10,9 @@ def top_k_finder(required_set, mcdm_technique, DECISION_MAKER_PREFERENCE,TO_REMO
     TO_REMOVE_LIST_ROUND =  [int(round(x)) for x in TO_REMOVE_LIST]
     HEURISTIC_TOP_k = []
     CPHF_sql = db_manager.prepare_CPHF_sql(TO_REMOVE_LIST_ROUND, total_number_of_criteria,total_solution_space)
-    results = db_manager.read_dataset_for_heuristic_mcdm(CPHF_sql)
+    results_tuple = db_manager.read_dataset_for_heuristic_mcdm(CPHF_sql)
+    results = results_tuple[0]
+    db_connection = results_tuple[1]
     for records in results:
         rows = records.fetchall()
         for row in rows:
@@ -20,6 +22,8 @@ def top_k_finder(required_set, mcdm_technique, DECISION_MAKER_PREFERENCE,TO_REMO
             heuristic_mcdm_index = mcdm_techniques.weighted_sum_model(current_sensor_context_data, user_preferences)        
             db_manager.insert_data_to_heuristic_table(solution_id, heuristic_mcdm_index)
     HEURISTIC_TOP_k = db_manager.sort_select_heuristic_table(required_set)
+    #====Closing====
+    db_connection.close()
     return HEURISTIC_TOP_k
 
 

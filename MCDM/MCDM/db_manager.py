@@ -48,6 +48,8 @@ def create_bruteforce_heuristic_results_table():
         cursor = db_connection.cursor()
         cursor.execute("DROP TABLE IF EXISTS " + RESULTS_DB_NAME+"."+RESULTS_TABLE_BRUTEFORCE_HEURISTIC + ";")
         cursor.execute(full_sql)
+        #====Closing====
+        db_connection.close()
         logging.debug(full_sql)
     except connector.Error as err:
         print(err)
@@ -59,6 +61,8 @@ def create_traditional_heuristic_results_table():
         cursor = db_connection.cursor()
         cursor.execute("DROP TABLE IF EXISTS " + RESULTS_DB_NAME+"."+RESULTS_TABLE_TRADITIONAL_HEURISTIC + ";")
         cursor.execute(full_sql)
+        #====Closing====
+        db_connection.close()
         logging.debug(full_sql)
     except connector.Error as err:
         print(err)
@@ -71,6 +75,8 @@ def create_results_database():
         cursor = db_connection.cursor()
         cursor.execute(
             "CREATE DATABASE IF NOT EXISTS {} DEFAULT CHARACTER SET 'utf8'".format(RESULTS_DB_NAME))
+        #====Closing====
+        db_connection.close()
     except connector.Error as err:
         print("Failed creating database: {}".format(err))
 
@@ -81,6 +87,8 @@ def create_database():
         cursor = db_connection.cursor()
         cursor.execute(
             "CREATE DATABASE IF NOT EXISTS {} DEFAULT CHARACTER SET 'utf8'".format(DB_NAME))
+        #====Closing====
+        db_connection.close()
     except connector.Error as err:
         print("Failed creating database: {}".format(err))
 
@@ -95,6 +103,8 @@ def create_dataset_table(total_number_of_criteria):
         cursor = db_connection.cursor()
         cursor.execute("DROP TABLE IF EXISTS " + DB_NAME+"."+SOLUTION_SPACE_DATA_TABLE + ";")
         cursor.execute(full_sql)
+        #====Closing====
+        db_connection.close()
     except connector.Error as err:
         print(err)
 
@@ -143,6 +153,8 @@ def insert_data_to_bruteforce_heuristic_results_table(total_number_of_criteria, 
     cursor = db_connection.cursor()
     cursor.execute(sql)
     db_connection.commit()
+    #====Closing====
+    db_connection.close()
 
 def insert_data_to_traditional_heuristic_results_table(total_number_of_criteria, total_solution_space, required_set, required_set_percentage, mcdm_technique, margine , margine_percentage , dataset_id , decision_id, preference_weight_1 , preference_weight_2, preference_weight_3, accuracy):
 
@@ -151,6 +163,8 @@ def insert_data_to_traditional_heuristic_results_table(total_number_of_criteria,
     cursor = db_connection.cursor()
     cursor.execute(sql)
     db_connection.commit()
+    #====Closing====
+    db_connection.close()
 
 def insert_data_to_db(id, data, db_name, table_name):
     values = ''
@@ -162,6 +176,8 @@ def insert_data_to_db(id, data, db_name, table_name):
     cursor = db_connection.cursor()
     cursor.execute(sql)
     db_connection.commit()
+    #====Closing====
+    db_connection.close()
 
 
 #====Create the Traditional MCDM Table=====
@@ -173,6 +189,8 @@ def create_traditional_mcdm_table(total_number_of_criteria):
         cursor = db_connection.cursor()
         cursor.execute("DROP TABLE IF EXISTS " + DB_NAME+"."+TRADITIONAL_MCDM_TABLE + ";")
         cursor.execute(full_sql)
+        #====Closing====
+        db_connection.close()
         logging.debug(full_sql)
     except connector.Error as err:
         print(err)
@@ -194,7 +212,8 @@ def read_dataset_for_traditional_mcdm():
         db_connection = connector.connect(user=USER_NAME, password=PASSWORD)
         cursor = db_connection.cursor()
         results = cursor.execute("SELECT * FROM " + DB_NAME+"."+SOLUTION_SPACE_DATA_TABLE, multi=True)
-        return results
+
+        return (results, db_connection)
     except connector.Error as err:
         print(err)
     
@@ -206,6 +225,8 @@ def insert_data_to_traditional_table(id, traditional_mcdm_index):
         sql = "INSERT INTO " + DB_NAME + "." + TRADITIONAL_MCDM_TABLE + " VALUES(" + str(id) + ","+str(traditional_mcdm_index) + ")"
         cursor.execute(sql)
         db_connection.commit()
+        #====Closing====
+        db_connection.close()
     except connector.Error as err:
         print(err)
 
@@ -222,6 +243,8 @@ def sort_select_traditional_table(required_set):
             for row in rows:
                 solution_id = row[0]
                 TRADITIONAL_TOP_k.append(solution_id)
+        #====Closing====
+        db_connection.close()
         return TRADITIONAL_TOP_k
     except connector.Error as err:
         print(err)
@@ -238,6 +261,8 @@ def create_heuristic_mcdm_table(total_number_of_criteria):
         cursor = db_connection.cursor()
         cursor.execute("DROP TABLE IF EXISTS " + DB_NAME+"."+ HEURISTIC_MCDM_TABLE + ";")
         cursor.execute(full_sql)
+        #====Closing====
+        db_connection.close()
         logging.debug(full_sql)
     except connector.Error as err:
         print(err)
@@ -259,7 +284,8 @@ def read_dataset_for_heuristic_mcdm(CPHF_sql):
         db_connection = connector.connect(user=USER_NAME, password=PASSWORD)
         cursor = db_connection.cursor()
         results = cursor.execute(CPHF_sql, multi=True)
-        return results
+        
+        return (results, db_connection)
     except connector.Error as err:
         print(err)
 
@@ -271,6 +297,8 @@ def insert_data_to_heuristic_table(id, heuristic_mcdm_index):
         sql = "INSERT INTO " + DB_NAME + "." + HEURISTIC_MCDM_TABLE + " VALUES(" + str(id) + ","+str(heuristic_mcdm_index) + ")"
         cursor.execute(sql)
         db_connection.commit()
+        #====Closing====
+        db_connection.close()
     except connector.Error as err:
         print(err)
 
@@ -279,6 +307,8 @@ def describe_table():
     sql = 'SELECT * FROM ' + DB_NAME +"."+ SOLUTION_SPACE_DATA_TABLE
     df = pd.read_sql(sql, con=db_connection)
     table_description = np.round(df.describe(), 2).T
+    #====Closing====
+    db_connection.close()
     return table_description
 
 
@@ -294,6 +324,8 @@ def sort_select_heuristic_table(required_set):
             for row in rows:
                 solution_id = row[0]
                 HEURISTIC_TOP_k.append(solution_id)
+        #====Closing====
+        db_connection.close()
         return HEURISTIC_TOP_k
     except connector.Error as err:
         print(err)
